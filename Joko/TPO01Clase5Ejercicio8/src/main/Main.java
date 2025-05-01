@@ -22,6 +22,7 @@ public class Main {
 						opcionCase1 = InOut.MenuCargaMapa();
 						switch(opcionCase1) {
 							case "1":
+								
 								break;
 							case "0":
 								System.out.println("Saliendo.... "); 
