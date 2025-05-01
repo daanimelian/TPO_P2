@@ -6,17 +6,30 @@ import controller.Controller;
 public class Main {
 	public static void main (String[] args) {
 		String opcion;
+		String opcionCase1;
 		InOut InOut = new InOut();
 		Controller Controller = new Controller();
 		do {
 			opcion = InOut.MenuPrincipal();
+			
 			switch(opcion) {
 			case "0":
 				System.out.println("Saliendo.... "); 
 				break;
 				case "1":
 					//Cargar un mapeo con notas de una materia 
-					Controller.CargarMapeo();
+					do {
+						opcionCase1 = InOut.MenuCargaMapa();
+						switch(opcionCase1) {
+							case "1":
+								break;
+							case "0":
+								System.out.println("Saliendo.... "); 
+								break;
+						}
+					}while(!opcionCase1.equals("0"));
+					
+					Controller.CargarMapeo(Controller.CrearMapa());
 					break;
 				case "2":
 					//Mostrar el último mapeo cargado 
@@ -28,11 +41,11 @@ public class Main {
 					break;
 				case "4":
 					//Agregar una nota para un DNI específico
-					Controller.CargarNota(InOut.PedirDni());
+					Controller.CargarNota(InOut.PedirDni(),InOut.PedirNota());
 					break;
 				case "5":
 					// Quitar una nota para un DNI específico 
-					Controller.QuitarNota(InOut.PedirDni());
+					Controller.QuitarNota(InOut.PedirDni(),InOut.PedirNota());
 					break;
 				case "6":
 					//Quitar un alumno

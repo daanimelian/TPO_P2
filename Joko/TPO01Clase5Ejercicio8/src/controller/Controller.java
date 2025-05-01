@@ -1,47 +1,53 @@
 package controller;
 
+import inout.InOut;
+import list.List;
 import map.Map;
+import mapSimple.MapSimple;
 
 public class Controller {
 	private Map<String,Integer> MapPrincipal;
-	public void CargarMapeo() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public Object getUltimoMapeo() {
-		// TODO Auto-generated method stub
+	private List<MapSimple<String,Integer>> ListaMapasSimple;
+	private InOut inout = new InOut();
+	
+	public MapSimple<String,Integer> CrearMapa(){
 		return null;
 	}
+	
+	public void CargarMapeo(MapSimple<String,Integer> map) {
+		ListaMapasSimple.addElementEnd(map);
+	}
 
-	public void AgregarMapeo(Object ultimoMapeo) {
-		// TODO Auto-generated method stub
+	public MapSimple<String,Integer> getUltimoMapeo() {
+		return ListaMapasSimple.getAt(ListaMapasSimple.size()-1);
+	}
+
+	public void AgregarMapeo(MapSimple<String,Integer> ultimoMapeo) {
+		String[] keys = ultimoMapeo.keys();
+		for(int i = 0; i < keys.length; i++) {
+			MapPrincipal.put(keys[i], ultimoMapeo.get(keys[i]));
+		}
 		
 	}
 
-	public void CargarNota(Object pedirDni) {
-		// TODO Auto-generated method stub
-		
+	public void CargarNota(String Dni, int nota) {
+		MapPrincipal.put(Dni, nota);
 	}
 
-	public void QuitarNota(Object pedirDni) {
-		// TODO Auto-generated method stub
-		
+	public void QuitarNota(String Dni, int nota) {
+		MapPrincipal.remove(Dni, nota);
 	}
 
-	public void QuitarAlumno(Object pedirDni) {
-		// TODO Auto-generated method stub
-		
+	public void QuitarAlumno(String Dni) {
+		MapPrincipal.remove(Dni);
 	}
 
-	public Object GetNotas(Object pedirDni) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Integer> GetNotas(String Dni) {
+		return MapPrincipal.get(Dni);
 	}
 
-	public Object GetAlumnos() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<String> GetAlumnos() {
+		return MapPrincipal.keys();
 	}
 
 	public Object GetAlumnosYPromedios() {

@@ -3,6 +3,7 @@ package inout;
 import java.util.Scanner;
 
 public class InOut {
+	
 	private Scanner scanner = new Scanner(System.in); 
 	
 	public String MenuPrincipal() {
@@ -23,13 +24,27 @@ public class InOut {
 		opcion = scanner.nextLine();
 		return opcion;
 	}
+	
+	public String MenuCargaMapa() {
+		String opcion;
+		System.out.println("----- Menu de Carga de Notas -----\n");
+		System.out.println("1.Comenzar carga de Notas.");
+		System.out.println("0.Salir."); 
+		opcion = scanner.nextLine();
+		return opcion;
+	}
+	
 
 	public void MostrarMapeo(Object ultimoMapeo) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	public Object PedirDni() {
+	public int PedirNota(){
+		return 0;
+	}
+	
+	public String PedirDni() {
 		// TODO Auto-generated method stub
 		return null;
 	}

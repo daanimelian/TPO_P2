@@ -1,8 +1,6 @@
-package map;
+package mapSimple;
 
-import list.List;
-
-public class Map<K extends Comparable<K>,V> {
+public class MapSimple<K extends Comparable<K>,V> {
 	private int size;
 	private Nodo<Entrada<K,V>> head;
 	private Nodo<Entrada<K,V>> tail;
@@ -11,9 +9,9 @@ public class Map<K extends Comparable<K>,V> {
 		return size == 0;
 	}
 	
-	public List<V> get(K key) {
+	public V get(K key) {
 		Nodo<Entrada<K,V>> aux;
-		List<V> resul = null;
+		V resul = null;
 		aux = head;
 		while(aux != null && resul == null) {
 			if(aux.getValue().getKey().equals(key)) {
@@ -25,23 +23,21 @@ public class Map<K extends Comparable<K>,V> {
 		return resul;
 	}
 	
-	public void put(K key, V value) {
+	public V put(K key, V value) {
 		Nodo<Entrada<K,V>> aux;
-		List<V> resul = null;
+		V resul = null;
 		aux = head;
 		while(aux != null && resul == null) {
 			if(aux.getValue().getKey().equals(key)) {
 				resul = aux.getValue().getValue();
-				aux.getValue().getValue().addElementEnd(value);;
+				aux.getValue().setValue(value);
 			}else {
 				aux = aux.getNext();				
 			}
 		}
 		
 		if (resul == null) {
-			List<V> auxList = new List<V>();
-			auxList.addElementEnd(value);
-			Entrada<K,V> nuevaEntry = new Entrada<K,V>(key, auxList);
+			Entrada<K,V> nuevaEntry = new Entrada<K,V>(key, value);
 		    Nodo<Entrada<K,V>> nuevoNodo = new Nodo<Entrada<K,V>>(nuevaEntry);
 
 		    if (isEmpty()) {
@@ -52,17 +48,30 @@ public class Map<K extends Comparable<K>,V> {
 		    }
 		    size++;
 		}
+		return resul;
 	}
 	
-	public V remove(K key, V value) {
+	public V remove(K key) {
 		Nodo<Entrada<K,V>> aux;
 		V resul = null;
 		aux = head;
 		while(aux != null && resul == null) {
 			if(aux.getValue().getKey().equals(key)) {
-				if(aux.getValue().getValue().contains(value)) {
-					resul = aux.getValue().getValue().removeElement(value);
-				}
+				resul = aux.getValue().getValue();
+				
+				if (aux.getNext() != null) {
+	                aux.getNext().setPrev(aux.getPrev());
+	            } else {
+	                tail = aux.getPrev();
+	            }
+				
+				if (aux.getPrev() != null) {
+	                aux.getPrev().setNext(aux.getNext());
+	            } else {
+	                head = aux.getNext();
+	            }
+				
+				size--;
 			}else {
 				aux = aux.getNext();				
 			}
@@ -71,53 +80,42 @@ public class Map<K extends Comparable<K>,V> {
 		return resul;
 	}
 	
-	public List<V> remove(K key) {
+	public K[] keys(){
 		Nodo<Entrada<K,V>> aux;
-		List<V> resul = null;
+		K[] resul = (K[]) new Object[size];
 		aux = head;
-		while(aux != null && resul == null) {
-			if(aux.getValue().getKey().equals(key)) {
-				resul = aux.getValue().getValue();
-				
-				if(aux == head) {
-					aux.getNext().setPrev(null);
-					head = aux.getNext();
-				}else if(aux == tail) {
-					aux.getPrev().setNext(null);
-					tail = aux.getPrev();
-				}else {
-					aux.getNext().setPrev(aux.getPrev());
-					aux.getPrev().setNext(aux.getNext());
-				}
-				size--;
-			}
-			aux = aux.getNext();	
-		}
-		
-		return resul;
-	}
-	
-	public List<K> keys(){
-		Nodo<Entrada<K,V>> aux;
-		List<K> resul = new List<K> ();
-		aux = head;
+		int contador = 0;
 		while(aux != null) {
-			resul.addElementEnd(aux.getValue().getKey()); 
+			resul[contador] = aux.getValue().getKey();
+			contador++;
 			aux = aux.getNext();		
 		}
 		return resul;
 	}
-
 	
-	public List<Entrada<K,V>> entries(){
+	public V[] values(){
 		Nodo<Entrada<K,V>> aux;
-		List<Entrada<K,V>> resul = new List<Entrada<K,V>> ();
-		aux = head; 
+		V[] resul = (V[]) new Object[size];
+		aux = head;
+		int contador = 0;
 		while(aux != null) {
-			resul.addElementEnd(aux.getValue());
+			resul[contador] =  aux.getValue().getValue();
+			contador++;
+			aux = aux.getNext();		
+		}
+		return resul;
+	}
+	
+	public Entrada<K,V>[] entries(){
+		Nodo<Entrada<K,V>> aux;
+		Entrada<K,V>[] resul = (Entrada<K,V>[]) new Object[size];
+		aux = head;
+		int contador = 0;
+		while(aux != null) {
+			resul[contador] =  aux.getValue();
+			contador++;
 			aux = aux.getNext();		
 		}
 		return resul;
 	}
 }
-

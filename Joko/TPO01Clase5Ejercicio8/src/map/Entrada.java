@@ -1,11 +1,13 @@
 package map;
 
+import list.List;
+
 public class Entrada <K extends Comparable<K>,V> implements Entry<K,V> {
 
 	private K key;
-	private V value;
+	private List<V> value;
 	
-	public Entrada(K key, V value) {
+	public Entrada(K key, List<V> value) {
 		this.key = key;
 		this.value = value;
 	}
@@ -16,7 +18,7 @@ public class Entrada <K extends Comparable<K>,V> implements Entry<K,V> {
 	}
 
 	@Override
-	public V getValue() { 
+	public List<V> getValue() { 
 		return value;
 	}
 
@@ -26,7 +28,7 @@ public class Entrada <K extends Comparable<K>,V> implements Entry<K,V> {
 	}
 
 	@Override
-	public void setValue(V value) {
+	public void setValue(List<V> value) {
 		this.value = value;
 	}
 	
