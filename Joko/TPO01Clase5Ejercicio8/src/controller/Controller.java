@@ -6,12 +6,42 @@ import map.Map;
 import mapSimple.MapSimple;
 
 public class Controller {
-	private Map<String,Integer> MapPrincipal;
-	private List<MapSimple<String,Integer>> ListaMapasSimple;
+	private static Map<String,Integer> MapPrincipal = new Map<String,Integer> ();
+	private List<MapSimple<String,Integer>> ListaMapasSimple = new List<MapSimple<String,Integer>>();
 	private InOut inout = new InOut();
 	
+	public boolean PrincipalVacio() {
+		return MapPrincipal.isEmpty();
+	}
+	
+	public boolean ListaMapasSimpleVacio() {
+		return ListaMapasSimple.isEmpty();
+	}
+	
 	public MapSimple<String,Integer> CrearMapa(){
-		return null;
+		MapSimple<String,Integer> materia = new MapSimple<String,Integer>();
+		String dni;
+		int nota;
+		String opcion;
+		do{
+			opcion = inout.MenuCargaMapa();
+			switch(opcion) {
+			case "1":
+				System.out.println("Recuerde que si ingresa un dni dos veces, la nota ingresada pisara la anterior.");
+				dni = inout.PedirDni();
+				nota = inout.PedirNota();
+				materia.put(dni, nota);
+				break;
+			case "0":
+				System.out.println("Saliendo...");
+			break;
+			default:
+				System.out.println("No se conoce la opcion, intente nuevamente");
+				break;
+			}
+		}while(!opcion.equals("0"));
+		
+		return materia;
 	}
 	
 	public void CargarMapeo(MapSimple<String,Integer> map) {
@@ -19,17 +49,21 @@ public class Controller {
 	}
 
 	public MapSimple<String,Integer> getUltimoMapeo() {
-		return ListaMapasSimple.getAt(ListaMapasSimple.size()-1);
+		return ListaMapasSimple.getAtEnd();
 	}
 
 	public void AgregarMapeo(MapSimple<String,Integer> ultimoMapeo) {
-		String[] keys = ultimoMapeo.keys();
-		for(int i = 0; i < keys.length; i++) {
-			MapPrincipal.put(keys[i], ultimoMapeo.get(keys[i]));
+		List<String> keys = ultimoMapeo.keys();
+		for(int i = 0; i < keys.size(); i++) {
+			MapPrincipal.put(keys.getAt(i), ultimoMapeo.get(keys.getAt(i)));
 		}
 		
 	}
-
+	 
+	public static boolean existeDni(String Dni) {
+		return !(MapPrincipal.get(Dni) == null);
+	}
+	
 	public void CargarNota(String Dni, int nota) {
 		MapPrincipal.put(Dni, nota);
 	}
@@ -50,9 +84,28 @@ public class Controller {
 		return MapPrincipal.keys();
 	}
 
-	public Object GetAlumnosYPromedios() {
-		// TODO Auto-generated method stub
-		return null;
+	public MapSimple<String,Float> GetAlumnosYPromedios() {
+		List<String> alumnos = GetAlumnos();
+		List<Integer> notas;
+		MapSimple<String,Float> notasPromedio = new MapSimple<String,Float>();
+		float promedio;
+		int cantidadNotas;
+		int acumuladorNotas;
+		for(int i = 0; i < alumnos.size(); i++) {
+			promedio = 0;
+			acumuladorNotas = 0;
+			notas = GetNotas(alumnos.getAt(i));
+			cantidadNotas = notas.size();
+			for(int j = 0; j < cantidadNotas; j++) {
+				acumuladorNotas += notas.getAt(j);
+			}
+			if(cantidadNotas > 0 ) {
+				promedio = acumuladorNotas/(float)cantidadNotas;
+			}
+			notasPromedio.put(alumnos.getAt(i), promedio);
+		}
+		return notasPromedio;
+		 
 	}
 	
 }

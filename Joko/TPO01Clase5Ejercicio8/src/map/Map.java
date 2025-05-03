@@ -63,9 +63,8 @@ public class Map<K extends Comparable<K>,V> {
 				if(aux.getValue().getValue().contains(value)) {
 					resul = aux.getValue().getValue().removeElement(value);
 				}
-			}else {
-				aux = aux.getNext();				
 			}
+			aux = aux.getNext();
 		}
 				
 		return resul;
@@ -79,16 +78,22 @@ public class Map<K extends Comparable<K>,V> {
 			if(aux.getValue().getKey().equals(key)) {
 				resul = aux.getValue().getValue();
 				
-				if(aux == head) {
-					aux.getNext().setPrev(null);
-					head = aux.getNext();
-				}else if(aux == tail) {
-					aux.getPrev().setNext(null);
-					tail = aux.getPrev();
+				if(size == 1) {
+					head = null;
+					tail = null;
 				}else {
-					aux.getNext().setPrev(aux.getPrev());
-					aux.getPrev().setNext(aux.getNext());
+					if(aux == head) {
+						aux.getNext().setPrev(null);
+						head = aux.getNext();
+					}else if(aux == tail) {
+						aux.getPrev().setNext(null);
+						tail = aux.getPrev();
+					}else {
+						aux.getNext().setPrev(aux.getPrev());
+						aux.getPrev().setNext(aux.getNext());
+					}					
 				}
+				
 				size--;
 			}
 			aux = aux.getNext();	

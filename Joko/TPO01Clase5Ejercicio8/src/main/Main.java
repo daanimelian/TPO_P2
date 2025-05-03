@@ -6,63 +6,76 @@ import controller.Controller;
 public class Main {
 	public static void main (String[] args) {
 		String opcion;
-		String opcionCase1;
-		InOut InOut = new InOut();
-		Controller Controller = new Controller();
+		InOut inOut = new InOut();
+		Controller controller = new Controller();
+		boolean listaMapasSimpleLleno =  !controller.ListaMapasSimpleVacio();
+		boolean mapaPrincipalLleno = !controller.PrincipalVacio();
 		do {
-			opcion = InOut.MenuPrincipal();
+			opcion = inOut.MenuPrincipal();
 			
 			switch(opcion) {
 			case "0":
 				System.out.println("Saliendo.... "); 
 				break;
 				case "1":
-					//Cargar un mapeo con notas de una materia 
-					do {
-						opcionCase1 = InOut.MenuCargaMapa();
-						switch(opcionCase1) {
-							case "1":
-								
-								break;
-							case "0":
-								System.out.println("Saliendo.... "); 
-								break;
-						}
-					}while(!opcionCase1.equals("0"));
-					
-					Controller.CargarMapeo(Controller.CrearMapa());
+					controller.CargarMapeo(controller.CrearMapa());
 					break;
 				case "2":
-					//Mostrar el último mapeo cargado 
-					InOut.MostrarMapeo(Controller.getUltimoMapeo());
+					if(listaMapasSimpleLleno) {
+						inOut.MostrarMapeo(controller.getUltimoMapeo());						
+					}else {
+						System.out.println("Debes cargar un mapeo antes.");
+					}
 					break;
 				case "3":
-					//Agregar el último mapeo cargado al Diccionario general 
-					Controller.AgregarMapeo(Controller.getUltimoMapeo());
+					if(listaMapasSimpleLleno) {
+						controller.AgregarMapeo(controller.getUltimoMapeo());
+						System.out.println("---CARGA EXITOSA---");
+					}else {
+						System.out.println("Debes cargar un mapeo antes.");
+					}
 					break;
 				case "4":
-					//Agregar una nota para un DNI específico
-					Controller.CargarNota(InOut.PedirDni(),InOut.PedirNota());
+					if(mapaPrincipalLleno) {
+						controller.CargarNota(inOut.PedirDniExistente(),inOut.PedirNota());
+					}else {
+						System.out.println("Debes agregar un mapeo al diccionario general antes.");
+					}
 					break;
 				case "5":
-					// Quitar una nota para un DNI específico 
-					Controller.QuitarNota(InOut.PedirDni(),InOut.PedirNota());
+					if(mapaPrincipalLleno) {
+						controller.QuitarNota(inOut.PedirDniExistente(),inOut.PedirNota());
+					}else {
+						System.out.println("Debes agregar un mapeo al diccionario general antes.");
+					}
 					break;
 				case "6":
-					//Quitar un alumno
-					Controller.QuitarAlumno(InOut.PedirDni());
+					if(mapaPrincipalLleno) {
+						controller.QuitarAlumno(inOut.PedirDniExistente());
+					}else {
+						System.out.println("Debes agregar un mapeo al diccionario general antes.");
+					}
 					break;
 				case "7":
-					//Mostrar las notas de un alumno 
-					InOut.MostrarNotas(Controller.GetNotas(InOut.PedirDni()));
+					if(mapaPrincipalLleno) {
+						inOut.MostrarNotas(controller.GetNotas(inOut.PedirDni()));
+					}else {
+						System.out.println("Debes agregar un mapeo al diccionario general antes.");
+					}
 					break;
 				case "8":
-					//Mostrar todos los alumnos 
-					InOut.MostrarAlumnos(Controller.GetAlumnos());
+					if(mapaPrincipalLleno) {
+						inOut.MostrarAlumnos(controller.GetAlumnos());
+					}else {
+						System.out.println("Debes agregar un mapeo al diccionario general antes.");
+					}
 					break;
 				case "9":
-					//Mostrar todos los alumnos y su promedio de notas 
-					InOut.MostrarAlumnosYPromedios(Controller.GetAlumnosYPromedios());
+					if(mapaPrincipalLleno) {
+						inOut.MostrarAlumnosYPromedios(controller.GetAlumnosYPromedios());
+					}else {
+						System.out.println("Debes agregar un mapeo al diccionario general antes.");
+					}
 					break;
 				default:
 					System.out.println("Opcion inexistente, intente nuevamente."); 

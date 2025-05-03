@@ -1,5 +1,7 @@
 package mapSimple;
 
+import list.List;
+
 public class MapSimple<K extends Comparable<K>,V> {
 	private int size;
 	private Nodo<Entrada<K,V>> head;
@@ -80,42 +82,39 @@ public class MapSimple<K extends Comparable<K>,V> {
 		return resul;
 	}
 	
-	public K[] keys(){
-		Nodo<Entrada<K,V>> aux;
-		K[] resul = (K[]) new Object[size];
-		aux = head;
-		int contador = 0;
-		while(aux != null) {
-			resul[contador] = aux.getValue().getKey();
-			contador++;
-			aux = aux.getNext();		
-		}
-		return resul;
+	public list.List<K> keys() {
+	    Nodo<Entrada<K, V>> aux = head;
+	    List<K> resul = new List<K>();
+
+	    while (aux != null) {
+	        resul.addElementEnd(aux.getValue().getKey());
+	        aux = aux.getNext();
+	    }
+
+	    return resul;
 	}
 	
-	public V[] values(){
-		Nodo<Entrada<K,V>> aux;
-		V[] resul = (V[]) new Object[size];
-		aux = head;
-		int contador = 0;
-		while(aux != null) {
-			resul[contador] =  aux.getValue().getValue();
-			contador++;
-			aux = aux.getNext();		
-		}
-		return resul;
+	public List<V> values() {
+	    Nodo<Entrada<K, V>> aux = head;
+	    List<V> resul = new List<V>();
+
+	    while (aux != null) {
+	        resul.addElementEnd(aux.getValue().getValue());
+	        aux = aux.getNext();
+	    }
+
+	    return resul;
 	}
 	
-	public Entrada<K,V>[] entries(){
-		Nodo<Entrada<K,V>> aux;
-		Entrada<K,V>[] resul = (Entrada<K,V>[]) new Object[size];
-		aux = head;
-		int contador = 0;
-		while(aux != null) {
-			resul[contador] =  aux.getValue();
-			contador++;
-			aux = aux.getNext();		
-		}
-		return resul;
+	public List<Entrada<K,V>> entries(){
+	    Nodo<Entrada<K,V>> aux = head;
+	    List<Entrada<K,V>> resul = new list.List<>();
+
+	    while (aux != null) {
+	        resul.addElementEnd(aux.getValue());
+	        aux = aux.getNext();
+	    }
+
+	    return resul;
 	}
 }

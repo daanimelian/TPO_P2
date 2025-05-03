@@ -28,7 +28,7 @@ public class Entrada <K extends Comparable<K>,V>{
 	}
 	
 	public String toString() {
-		return "(" + getKey() + "," + getValue() + ")" ;
+		return "(" + getKey() + "\t" + getValue() + "\t)" ;
 	}
 }
 

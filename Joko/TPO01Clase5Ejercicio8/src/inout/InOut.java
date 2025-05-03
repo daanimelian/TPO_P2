@@ -2,12 +2,23 @@ package inout;
 
 import java.util.Scanner;
 
+import controller.Controller;
+import list.List;
+import map.Entrada;
+import mapSimple.MapSimple;
+
 public class InOut {
 	
 	private Scanner scanner = new Scanner(System.in); 
 	
-	public String MenuPrincipal() {
+	private String PedirOpcion() {
+		System.out.println("Ingrese una opcion: ");
 		String opcion;
+		opcion = scanner.nextLine();
+		return opcion;
+	}
+	
+	public String MenuPrincipal() {
 		System.out.println("----- Bienvenido al Ejercicio 8 -----\n");
 		System.out.println("Opciones");
 		System.out.println("1.Cargar un mapeo con notas de una materia.");
@@ -20,47 +31,88 @@ public class InOut {
 		System.out.println("8.Mostrar todos los alumnos."); 
 		System.out.println("9.Mostrar todos los alumnos y su promedio de notas."); 
 		System.out.println("0.Salir."); 
-		System.out.println("Ingrese una opcion: ");
-		opcion = scanner.nextLine();
-		return opcion;
+		return PedirOpcion();
 	}
 	
-	public String MenuCargaMapa() {
-		String opcion;
-		System.out.println("----- Menu de Carga de Notas -----\n");
-		System.out.println("1.Comenzar carga de Notas.");
+	public String MenuCargaMapa() { 
+		System.out.println("1.Cargar nota.");
 		System.out.println("0.Salir."); 
-		opcion = scanner.nextLine();
-		return opcion;
+		return PedirOpcion();
 	}
 	
 
-	public void MostrarMapeo(Object ultimoMapeo) {
-		// TODO Auto-generated method stub
+	public void MostrarMapeo(MapSimple<String,Integer> ultimoMapeo) {
+		List<mapSimple.Entrada<String, Integer>> entradas = ultimoMapeo.entries();
+		System.out.println("(DNI\t\tNOTA\t)"); 
+		for(int i = 0; i < entradas.size(); i++) {
+			System.out.println(entradas.getAt(i).toString());
+		}
+		System.out.println("(-----------------------)"); 
+		System.out.println("Presione enter para continuar."); 
+		scanner.nextLine();
 		
 	}
 
 	public int PedirNota(){
-		return 0;
+		String notaString;
+		int notaInt;
+		do {
+			System.out.println("Ingrese una Nota (Entre 0 y 10): ");
+			notaString = scanner.nextLine();
+			try {
+				notaInt = Integer.parseInt(notaString);
+				
+			}catch(NumberFormatException e) {
+				System.out.println("Error, no es un numero valido");
+				notaInt = PedirNota();
+			}
+			
+		}while(notaInt < 0 || notaInt > 10);
+		return notaInt;
+	}
+	
+	public String PedirDniExistente() {
+		System.out.println("Ingrese un DNI: ");
+		String dni;
+		dni = scanner.nextLine();
+		while(!Controller.existeDni(dni)) {
+			System.out.println("Ese DNI no existe, intente denuevo.");
+			System.out.println("Ingrese un DNI: ");
+			dni = scanner.nextLine();
+		}
+		return dni;
 	}
 	
 	public String PedirDni() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public void MostrarNotas(Object getNotas) {
-		// TODO Auto-generated method stub
+		System.out.println("Ingrese un DNI: ");
+		String opcion;
+		opcion = scanner.nextLine();
+		return opcion;
+	}		
 		
+	public void MostrarNotas(List<Integer> Notas) {
+		System.out.println("Lista de Notas del alumno.");
+		for(int i = 0; i < Notas.size(); i++) {
+			System.out.println(i + ". " + Notas.getAt(i).toString());
+		}
 	}
 
-	public void MostrarAlumnos(Object getAlumnos) {
-		// TODO Auto-generated method stub
-		
+	public void MostrarAlumnos(List<String> Alumnos) {
+		System.out.println("Lista de alumnos");
+		for(int i = 0; i < Alumnos.size(); i++) {
+			System.out.println(i + ". " + Alumnos.getAt(i).toString());
+		}
 	}
 
-	public void MostrarAlumnosYPromedios(Object getAlumnosYPromedios) {
-		// TODO Auto-generated method stub
+	public void MostrarAlumnosYPromedios(MapSimple<String,Float> AlumnosYPromedios) {
+		List<mapSimple.Entrada<String, Float>> entradas = AlumnosYPromedios.entries();
+		System.out.println("(DNI\t\tPROMEDIO)"); 
+		for(int i = 0; i < entradas.size(); i++) {
+			System.out.println(entradas.getAt(i).toString());
+		}
+		System.out.println("(-----------------------)"); 
+		System.out.println("Presione enter para continuar."); 
+		scanner.nextLine();
 		
 	}
 }

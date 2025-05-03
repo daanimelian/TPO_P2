@@ -72,6 +72,14 @@ public class List<T> {
 		return resul;
 	}
 	
+	public T getAtEnd() {
+		T resul = null;
+		if(!isEmpty()) {
+			resul = tail.getValue();
+		}
+		return resul;
+	}
+	
 	public T getAt(int i) {
 		T resul = null;
 		Nodo<T> aux;
