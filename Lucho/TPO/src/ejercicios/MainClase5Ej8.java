@@ -91,17 +91,32 @@ public class MainClase5Ej8 {
 			Integer dni = alumno.getKey();
 			System.out.print("Notas del alumno con DNI " + dni + ": ");
 			for(Integer nota : alumno.getValue()) {
-				System.out.print(nota + " ");
+				System.out.print(nota + "-");
 			}
-			System.out.println("\n");
+			System.out.println(".\n");
 			
 		}
 	}
-//	--------------------------------------Main--------------------------------------
-
-	public static void main(String[] args) {
-		ArrayStack<ArrayMap<Integer, Integer>> stackMapas = new ArrayStack<ArrayMap<Integer, Integer>>(100);
-		LinkedDictionary<Integer,Integer> diccionarioFinal = new LinkedDictionary<Integer,Integer>();
+	
+	public static void MostrarTodosLosAlumnosyPromedios(LinkedDictionary<Integer,Integer> diccionarioFinal) {
+		Iterable <Entry <Integer, Iterable <Integer>>>  alumnos = diccionarioFinal.entries();
+		for(Entry <Integer, Iterable <Integer>> alumno : alumnos) {
+			Integer dni = alumno.getKey();
+			System.out.print("Notas del alumno con DNI " + dni + ": ");
+			double sumador = 0;
+			int cantMaterias = 0;
+			for(Integer nota : alumno.getValue()) {
+				System.out.print(nota + "-");
+				sumador += nota;
+				cantMaterias ++;
+			}
+			double promedio = sumador/cantMaterias;
+			System.out.println("\nPromedio de notas: "+ promedio + ".\n");
+			
+		}
+	}
+	
+	public static void menu (ArrayStack<ArrayMap<Integer, Integer>> stackMapas, LinkedDictionary<Integer,Integer> diccionarioFinal) {
 		boolean continuar = true;
 		Scanner scan = new Scanner(System.in);
 		System.out.println("Bienvenid@ al Programa de carga de notas de materias!");
@@ -110,16 +125,35 @@ public class MainClase5Ej8 {
 			System.out.println("-----------Opciones-----------");
 			System.out.println("Elija el número de la opción para continuar: ");
 
-			System.out.println("1-Cargar un mapeo con notas de una materia\n" +
-								"2-Mostrar el último mapeo cargado \n" +
-								"3-Agregar el último mapeo cargado al Diccionario general\n" +
-								"4-Agregar una nota para un DNI específico\n" +
-								"5-Quitar una nota para un DNI específico\n" +
-								"6-Quitar un alumno\n" +
-								"7-Mostrar las notas de un alumno\n" +
-								"8-Mostrar todos los alumnos\n" +
-								"----------------------");
+			System.out.println("1 - Cargar un mapeo con notas de una materia\n" +
+								"2 - Mostrar el último mapeo cargado \n" +
+								"3 - Agregar el último mapeo cargado al Diccionario general\n" +
+								"4 - Agregar una nota para un DNI específico\n" +
+								"5 - Quitar una nota para un DNI específico\n" +
+								"6 - Quitar un alumno\n" +
+								"7 - Mostrar las notas de un alumno\n" +
+								"8 - Mostrar todos los alumnos\n" +
+								"9 - Mostrar todos los alumnos y su promedio de notas\n" + 
+								"fin - Finalizar programa\n" +
+								"----------------------\n");
 			String opcionElegida = scan.nextLine();
+			while(!opcionElegida.equals("1") && !opcionElegida.equals("2") &&  !opcionElegida.equals("3") && !opcionElegida.equals("4")
+					&& !opcionElegida.equals("5") && !opcionElegida.equals("6") && !opcionElegida.equals("7") && !opcionElegida.equals("8")
+					&& !opcionElegida.equals("9") && !opcionElegida.equals("fin")) {
+				System.out.println("Opción inválida, por favor ingrese una de las opciones mencionadas.\n");
+				System.out.println("1 - Cargar un mapeo con notas de una materia\n" +
+						"2 - Mostrar el último mapeo cargado \n" +
+						"3 - Agregar el último mapeo cargado al Diccionario general\n" +
+						"4 - Agregar una nota para un DNI específico\n" +
+						"5 - Quitar una nota para un DNI específico\n" +
+						"6 - Quitar un alumno\n" +
+						"7 - Mostrar las notas de un alumno\n" +
+						"8 - Mostrar todos los alumnos\n" +
+						"9 - Mostrar todos los alumnos y su promedio de notas\n" + 
+						"fin - Finalizar programa\n" +
+						"----------------------\n");
+				opcionElegida = scan.nextLine();
+			}
 			switch(opcionElegida) {
 			case("1"):
 				cargarMap(stackMapas);
@@ -158,14 +192,30 @@ public class MainClase5Ej8 {
 			case("8"):
 				MostrarTodosLosAlumnos(diccionarioFinal);
 				break;
-			case("-1"):
+			case("9"):
+				MostrarTodosLosAlumnosyPromedios(diccionarioFinal);
+				break;
+			case("fin"):
 				System.out.println("-----------------------Finalizando-----------------------");
 				continuar = false;
 				break;
 			}
+			System.out.println("\n");
+			System.out.println("\n");
+			System.out.println("\n");
+			System.out.println("\n");
 			
 
 		}
 	}
 
+	
+//	--------------------------------------Main--------------------------------------
+
+	public static void main(String[] args) {
+		ArrayStack<ArrayMap<Integer, Integer>> stackMapas = new ArrayStack<ArrayMap<Integer, Integer>>(100);
+		LinkedDictionary<Integer,Integer> diccionarioFinal = new LinkedDictionary<Integer,Integer>();
+		menu(stackMapas, diccionarioFinal);
+
+}
 }
