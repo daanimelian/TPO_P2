@@ -1,0 +1,27 @@
+package map;
+
+public class Entrada <K extends Comparable<K>, V> implements Entry <K, V> {
+	private K clave;
+	private V valor;
+	public Entrada(K clave, V valor) {
+		this.clave = clave;
+		this.valor = valor;
+	}
+	public K getKey() {
+		return clave;
+	}
+	public V getValue() {
+		return valor;
+	}
+	public void setKey(K clave) {
+		this.clave = clave;
+	}
+	public void setValue(V valor) {
+		this.valor = valor;
+	}
+	@Override
+	public String toString() {
+		return "Clave: " + clave +", Valor: " + valor;
+	}
+
+}
